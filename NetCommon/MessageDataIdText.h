@@ -28,10 +28,14 @@ private:
 	friend std::ostream& operator<<(std::ostream& os, const MessageDataIdText& message_data);
 };
 
+//----------------------------------------------------
+
 inline std::ostream& operator<<(std::ostream& os, const MessageDataIdText& message_data)
 {
 	return os << message_data.id_ << ' ' << message_data.text_;
 }
+
+//----------------------------------------------------
 
 inline void MessageDataIdText::Decode(std::vector<uint8_t> bytes)
 {
@@ -46,6 +50,8 @@ inline void MessageDataIdText::Decode(std::vector<uint8_t> bytes)
 	text_.assign(vec_chars.begin(), vec_chars.end());
 }
 
+//----------------------------------------------------
+
 inline std::vector<uint8_t> MessageDataIdText::Encode() const
 {
 	std::vector<uint8_t> result;
@@ -55,7 +61,7 @@ inline std::vector<uint8_t> MessageDataIdText::Encode() const
 	return result;
 }
 
-
+//----------------------------------------------------
 
 inline std::shared_ptr<MessageDataIdText> MessageDataIdText::Create(uint32_t id, std::string text)
 {

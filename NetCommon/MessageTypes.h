@@ -10,10 +10,7 @@ enum class MessageTypes
 #include "IMessageData.h"
 #include "MessageDataIdText.h"
 
-
-
-
-
+//----------------------------------------------------
 
 std::shared_ptr<IMessageData> CreateMessage(MessageTypes type)
 {

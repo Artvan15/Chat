@@ -14,12 +14,12 @@ public:
 	Message(T message_type)
 		: header_{message_type} {}
 
-	uint32_t Size() const;
+	uint32_t DataSize() const;
 
 	Message& FromMessageData(const std::shared_ptr<IMessageData>& data);
 	Message& ToMessageData(const std::shared_ptr<IMessageData>& data);
 
-public:
+private:
 	MessageHeader header_;
 	std::vector<uint8_t> data_;
 	
@@ -30,15 +30,21 @@ public:
 	template<typename V, typename SimpleDataType>
 	friend Message<V>& operator>>(Message<V>& message, SimpleDataType& data);
 
+	template<typename V, typename Derived>
+	friend class Connection;
 };
 
 #include "MessageHeader.h"
 
+//----------------------------------------------------
+
 template <typename T>
-uint32_t Message<T>::Size() const
+uint32_t Message<T>::DataSize() const
 {
 	return header_.message_size ;
 }
+
+//----------------------------------------------------
 
 template <typename T>
 Message<T>& Message<T>::FromMessageData(const std::shared_ptr<IMessageData>& data)
@@ -48,6 +54,8 @@ Message<T>& Message<T>::FromMessageData(const std::shared_ptr<IMessageData>& dat
 	return *this;
 }
 
+//----------------------------------------------------
+
 template <typename T>
 Message<T>& Message<T>::ToMessageData(const std::shared_ptr<IMessageData>& data)
 {
@@ -56,8 +64,12 @@ Message<T>& Message<T>::ToMessageData(const std::shared_ptr<IMessageData>& data)
 	return *this;
 }
 
+//----------------------------------------------------
+
 template<typename T>
 concept Condition = std::is_standard_layout_v<T>;
+
+//----------------------------------------------------
 
 template<typename V, typename SimpleDataType>
 requires Condition<SimpleDataType>
@@ -70,6 +82,7 @@ Message<V>& operator<<(Message<V>& message, const SimpleDataType& data)
 	return message;
 }
 
+//----------------------------------------------------
 
 template<typename V, typename SimpleDataType>
 requires Condition<SimpleDataType>
