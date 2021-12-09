@@ -1,6 +1,5 @@
-#include "Message.h"
+#include "ClientBack.h"
 #include "MessageTypes.h"
-#include "MessageDataIdText.h"
 #include <iostream>
 
 
@@ -8,6 +7,6 @@
 int main()
 {
 	
-	
+	ClientBack<MessageTypes> client;
 	
 }
