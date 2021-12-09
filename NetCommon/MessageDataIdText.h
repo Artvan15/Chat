@@ -47,7 +47,8 @@ inline void MessageDataIdText::Decode(std::vector<uint8_t> bytes)
 	std::vector<char> vec_chars(bytes.size());
 	memcpy(vec_chars.data(), bytes.data(), bytes.size());
 
-	text_.assign(vec_chars.begin(), vec_chars.end());
+	text_.assign(std::make_move_iterator(vec_chars.begin()),
+		std::make_move_iterator( vec_chars.end()));
 }
 
 //----------------------------------------------------

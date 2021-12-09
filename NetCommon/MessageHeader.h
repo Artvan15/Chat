@@ -1,5 +1,6 @@
 #pragma once
 #include "Message.h"
+#include <cstdint>
 
 
 template<typename T>

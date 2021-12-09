@@ -2,6 +2,8 @@
 #include <memory>
 
 
+
+
 enum class MessageTypes
 {
 	IdWithText

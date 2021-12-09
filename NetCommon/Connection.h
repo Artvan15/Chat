@@ -12,6 +12,8 @@ protected:
 		boost::asio::ip::tcp::socket&& socket)
 		: io_(io), socket_(std::move(socket)) {}
 
+public:
+
 	//Close socket. Add this task to token queue in io
 	void Disconnect();
 
@@ -21,7 +23,7 @@ protected:
 	//If message write loop is stopped - start a new one calling WriteHeader()
 	void Send(const Message<T>& message);
 
-
+protected:
 	//ASYNC - Start async_read to temp_message.header
 	//if there is no body - add msg to queue and start another read
 	//Otherwise resize temp_message.body and call ReadBody()
@@ -101,7 +103,7 @@ template <typename T, typename Derived>
 void Connection<T, Derived>::ReadHeader()
 {
 	boost::asio::async_read(socket_,
-		boost::asio::buffer(&temp_in_message_.header_, sizeof(Message<T>::MessageHeader)),
+		boost::asio::buffer(&temp_in_message_.header_, sizeof(typename Message<T>::MessageHeader)),
 		[this](const boost::system::error_code& er, size_t bytes)
 		{
 			if (!er)

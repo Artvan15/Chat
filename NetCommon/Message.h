@@ -5,12 +5,18 @@
 #include <memory>
 #include "IMessageData.h"
 
+
+// data represented as std::vector<uint8_t>
+
+using ErrorMessage = std::pair<bool, std::string>;
+
 template<typename T>
 class Message
 {
 public:
 	struct MessageHeader;
 public:
+	Message() = default;
 	Message(T message_type)
 		: header_{message_type} {}
 
